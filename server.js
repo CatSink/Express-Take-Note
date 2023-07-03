@@ -1,20 +1,35 @@
+const express = require ('express');
+const fs = require ('fs');
+
 const express = require('express');
-const app = express()
-const PORT = process.env.PORT ||3001
 const path = require('path');
-app.use(express.static(path.join(_dirname,'public')));
+const { clog } = require('./middleware/clog');
+const api = require('./routes/index.js');
 
+const PORT = process.env.port || 3001;
+
+const app = express();
+
+// Import custom middleware, "cLog"
+app.use(clog);
+
+// Middleware for parsing JSON and urlencoded form data
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
+app.use('/api', api);
 
-const apiRoutes = require('../routes/api.js');
-const htmlRoutes = require('../routes/html.js');
+app.use(express.static('public'));
 
-app.use('/api', apiRoutes);
-app.use('/', htmlRoutes);
+// GET Route for homepage
+app.get('/', (req, res) =>
+  res.sendFile(path.join(__dirname, '/public/index.html'))
+);
 
-app.listen('PORT', () => {
-    console.log(`listening on http://localhost:${PORT}!`);
-});    
+// GET Route for feedback page
+app.get('/feedback', (req, res) =>
+  res.sendFile(path.join(__dirname, '/public/pages/feedback.html'))
+);
 
-
+app.listen(PORT, () =>
+  console.log(`App listening at http://localhost:${PORT} 🚀`)
+);
