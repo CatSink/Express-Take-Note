@@ -16,6 +16,7 @@ This project will be available on <heroku.com> in the future. To explore the not
 
 ## Usage
 
+This website is under construction checkout <https://dazzling-cuyahoga-valley-39210-aa18149c4874.herokuapp.com/>
 I have added some images to show what will appear in the localhost browser window.
 
 ![Note-Taker](Assets/note-taker-index.jpg)
